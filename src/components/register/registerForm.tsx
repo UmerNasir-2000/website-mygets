@@ -22,9 +22,11 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Email must be valid.",
   }),
-  password: z.string().min(7, {
-    message: "Password must be valid.",
-  }),
+  password: z
+    .string()
+    .min(8)
+    .max(20)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
 })
 
 const RegisterForm = () => {
