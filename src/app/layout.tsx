@@ -1,20 +1,18 @@
-import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
-import type { PropsWithChildren } from 'react'
-import './globals.css'
+'use client';
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600','700'] })
+import { AuthProvider } from "@propelauth/react";
+import { Poppins } from "next/font/google";
+import type { PropsWithChildren } from "react";
+import "./globals.css";
 
-export const metadata: Metadata = {
-  title: 'MyGETS',
-}
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] })
 
-export default function RootLayout({
-  children,
-}: PropsWithChildren) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>{children}</body>
+    <html lang='en'>
+      <body className={poppins.className}>
+        <AuthProvider authUrl="https://505027270.propelauthtest.com">{children}</AuthProvider>
+      </body>
     </html>
   )
 }
