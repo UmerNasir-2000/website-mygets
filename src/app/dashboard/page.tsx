@@ -1,9 +1,10 @@
 "use client"
 
 import { useAuthInfo } from "@propelauth/react"
-import { PlusCircleIcon } from "lucide-react"
+import { PlusCircleIcon, Settings2Icon } from "lucide-react"
 import { useEffect, useState } from "react"
 import CreateOrganizationModal from "../../components/modal/create-organization"
+import InviteUserModal from "../../components/modal/invite-user"
 import { Badge } from "../../components/ui/badge"
 import { Button } from "../../components/ui/button"
 import {
@@ -27,7 +28,8 @@ export default function DashboardPage() {
   const user = useAuthInfo()
   const [organizations, setOrganizations] = useState<Organization[]>([])
   const [open, setOpen] = useState<boolean>(false)
-
+  const [org, setOrg] = useState<Organization | null>(null)
+  const [inviteModalOpen, setInviteModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (!user) {
@@ -82,13 +84,34 @@ export default function DashboardPage() {
                     <Badge>{org.role}</Badge>
                   </TableCell>
                   <TableCell>{org.slug}</TableCell>
+                  {org.role === "Admin" && (
+                    <TableCell
+                      className='cursor-pointer'
+                      onClick={() => {
+                        setOrg(org)
+                        setInviteModalOpen(true)
+                      }}
+                    >
+                      <Settings2Icon />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
       </div>
-      {open && <CreateOrganizationModal open={open} onClose={() => setOpen(false)} />}
+      {open && (
+        <CreateOrganizationModal open={open} onClose={() => setOpen(false)} />
+      )}
+      {inviteModalOpen && (
+        <InviteUserModal
+          open={inviteModalOpen}
+          org={org?.name!}
+          orgId={org?.id!}
+          onClose={() => setInviteModalOpen(false)}
+        />
+      )}
     </>
   )
 }
