@@ -4,7 +4,6 @@ import Image from "next/image"
 import * as z from "zod"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 
 import { Button } from "../ui/button"
@@ -38,11 +37,9 @@ const RegisterForm = () => {
     },
   })
 
-  const router = useRouter()
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const response = await fetch(
-      `https://backend-mygets.vercel.app/create-user`,
+      `http://localhost:5000/create-user`,
       {
         method: "POST",
         headers: {
@@ -52,7 +49,7 @@ const RegisterForm = () => {
       }
     )
     await response.json()
-    router.push("/dashboard")
+    window.location.href = "https://505027270.propelauthtest.com/login"
   }
 
   return (

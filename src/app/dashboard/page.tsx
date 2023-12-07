@@ -22,6 +22,7 @@ export interface Organization {
   name: string
   role: string
   slug: string
+  metadata: any
 }
 
 export default function DashboardPage() {
@@ -47,6 +48,7 @@ export default function DashboardPage() {
               name: org.orgName,
               role: org.userAssignedRole,
               slug: org.urlSafeOrgName,
+              metadata: org.orgMetadata
             } as Organization)
         )
         setOrganizations(organizations)
@@ -73,6 +75,9 @@ export default function DashboardPage() {
                 <TableHead>Name</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead>Slug</TableHead>
+                <TableHead>Country</TableHead>
+                <TableHead>Industry Type</TableHead>
+                <TableHead>Tender Products</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -84,6 +89,9 @@ export default function DashboardPage() {
                     <Badge>{org.role}</Badge>
                   </TableCell>
                   <TableCell>{org.slug}</TableCell>
+                  <TableCell>{org.metadata?.country ?? `-`}</TableCell>
+                  <TableCell>{org.metadata?.industryType ?? `-`}</TableCell>
+                  <TableCell>{org.metadata?.tenderProducts ?? `-`}</TableCell>
                   {org.role === "Admin" && (
                     <TableCell
                       className='cursor-pointer'

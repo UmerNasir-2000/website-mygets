@@ -10,10 +10,9 @@ export const fetchUserOrganizations = async (accessToken: string) => {
 }
 
 export const createNewOrganization = async (
-  name: string,
+  requestBody: {name: string, country: string, industryType: string, tenderProducts: string },
   accessToken: string
 ) => {
-  const requestBody = { name }
   const response = await fetch(`${URL}/create-organization`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
